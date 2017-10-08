@@ -24,7 +24,7 @@ dubbo-rpc-jsonrpc
 ## maven依赖：
 ```xml
 <dependency>
-    <groupId>com.ofpay</groupId>
+    <groupId>com.qianmi</groupId>
     <artifactId>dubbo-rpc-jsonrpc</artifactId>
     <version>1.0.1</version>
 </dependency>
@@ -100,9 +100,15 @@ web.xml：
 ```
 注意，如果使用servlet派发请求：
 
-协议的端口<dubbo:protocol port="8080" />必须与servlet容器的端口相同，
-协议的上下文路径<dubbo:protocol contextpath="foo" />必须与servlet应用的上下文路径相同。
+协议的端口```<dubbo:protocol port="8080" />```必须与servlet容器的端口相同，
+协议的上下文路径```<dubbo:protocol contextpath="foo" />```必须与servlet应用的上下文路径相同。
 
+CORS跨源支持:
+```xml
+<dubbo:protocol name="jsonrpc" ...  />
+	<dubbo:parameter key="cors" value="true" />
+</dubbo:protocol>
+```
 --------------
 ## Example
 
@@ -121,7 +127,7 @@ public interface PhoneNoCheckProvider {
 Client
 ```shell
 curl -i -H 'content-type: application/json' -X POST -d '{"jsonrpc": "2.0", "method": "isPhoneNoLimit", "params": [ "MOBILE", "130000", "A001"],
-         "id": 1 }' 'http://127.0.0.1:18080/com.ofpay.api.PhoneNoCheckProvider'
+         "id": 1 }' 'http://127.0.0.1:18080/com.qianmi.api.PhoneNoCheckProvider'
 ```
 
 Python Client Example
@@ -136,7 +142,7 @@ def raw_client(app_params):
     headers = {"Content-type": "application/json-rpc",
                "Accept": "text/json"}
     h1 = httplib.HTTPConnection('172.19.32.135', port=18080)
-    h1.request("POST", '/com.ofpay.ofdc.api.phone.PhoneNoCheckProvider', json.dumps(app_params), headers)
+    h1.request("POST", '/com.qianmi.ofdc.api.phone.PhoneNoCheckProvider', json.dumps(app_params), headers)
     response = h1.getresponse()
     return response.read()
 
@@ -152,15 +158,17 @@ if __name__ == '__main__':
 ```
 
 ## Python客户端
-https://github.com/ofpay/dubbo-client-py
+https://github.com/QianmiOpen/dubbo-client-py
 
 ## Nodejs客户端
-https://github.com/ofpay/dubbo-node-client
+https://github.com/QianmiOpen/dubbo-node-client
 
 ## 客户端服务端Example  
 https://github.com/JoeCao/dubbo_jsonrpc_example  
 使用docker运行
 
+## 浏览器调用
+需按前述开启CORS支持, 可使用 https://github.com/datagraph/jquery-jsonrpc
 
 ## 文档资料
 
